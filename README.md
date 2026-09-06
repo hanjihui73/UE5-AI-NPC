@@ -73,3 +73,68 @@ https://github.com/user-attachments/assets/87c5dcf2-8388-41ee-b0ca-b279346604ad
 - **Unreal Engine 5:** 렌더링, 장면 캡처, 충돌 검사 등 엔진 기능 활용
 - **VLM·LLM API:** 이미지 분석과 시선 계획 생성을 위한 모델 추론 활용
 - **직접 구현한 부분:** 모델 입출력 구성, UE5–서버 연동,
+
+## 전체 시스템 구조
+
+시스템은 **장면을 분석하고 시선 계획을 생성하는 Python 서버**와
+**계획을 실제 NPC 행동으로 연결하는 Unreal Engine 5**로 구성했습니다.
+
+위험·소리 자극은 UE5 내부에서 처리하여
+서버 응답을 기다리지 않고 시선 판단에 반영합니다.
+
+```mermaid
+flowchart TD
+    A["UE5: 장면 캡처"] --> B["Python 서버: VLM 장면 분석"]
+    B --> C["LLM: 성격별 시선 계획 생성"]
+    C --> D["선택 대상의 Bounding Box 확보"]
+    D --> E["UE5: 계획 수신 및 3D 타깃 변환"]
+    E --> F["NPC별 시선 후보 평가"]
+
+    G["UE5: 위험·소리 자극 감지"] --> F
+    F --> H["시선 대상 결정 및 회전 제어"]
+```
+
+### 1. 장면 캡처 및 객체 인식
+
+UE5에서 캡처한 장면 이미지를 Python 서버로 전송합니다.
+서버는 VLM으로 이미지 속 객체를 분석하고,
+시선 계획 생성에 사용할 객체 정보를 구성합니다.
+
+<!-- 이 아래에 장면 캡처와 객체 인식 결과 이미지를 넣습니다. -->
+<img width="1024" height="1024" alt="capture_plan_0" src="https://github.com/user-attachments/assets/67fbc0c9-b732-4d9e-b428-f9b132264c51" />
+<img width="792" height="455" alt="image" src="https://github.com/user-attachments/assets/bc4b2801-b5e4-444f-a65c-ad57d088fef3" />
+
+
+### 2. 성격별 시선 계획 생성
+
+장면 분석 결과를 공유하고, LLM이 NPC 성격에 따라
+시선 대상·동기·유지 시간·선택 이유를 생성합니다.
+생성된 계획은 성격별로 구분하여 UE5에 전달합니다.
+
+<!-- 이 아래에 성격별 계획 생성 결과 이미지를 넣습니다. -->
+<img width="1828" height="333" alt="image" src="https://github.com/user-attachments/assets/a176d789-0248-4a4b-8aa4-0d3a52cd8d88" />
+
+
+### 3. 이미지 속 객체를 3D 시선 타깃으로 변환
+
+선택된 객체의 Bounding Box를 캡처 카메라의 투영 정보로
+월드 방향으로 변환합니다.
+
+박스 내부 9개 지점에 Raycast를 수행하고,
+충돌 결과를 집계하여 실제 월드의 시선 타깃을 결정합니다.
+이를 통해 사전 태그 매칭에 의존하던 타깃 지정 방식을 개선했습니다.
+
+<!-- 이 아래에 Bounding Box가 표시된 이미지를 넣습니다. -->
+<img width="1520" height="432" alt="image" src="https://github.com/user-attachments/assets/4cb4223f-f770-47fd-8b72-1f3d129252fe" />
+
+
+### 4. 실시간 시선 판단 및 동작 실행
+
+각 NPC는 서버 계획과 위험·소리 자극을 시선 판단에 반영합니다.
+성격별 가중치와 위험도 등을 바탕으로 시선 대상을 결정하고,
+회전 범위 제한과 보간을 적용해 시선 동작으로 연결합니다.
+
+<!-- 이 아래에 NPC 반응 이미지 또는 영상을 넣습니다. -->
+
+https://github.com/user-attachments/assets/b2faaca9-48dc-4386-b354-4764c058a067
+
