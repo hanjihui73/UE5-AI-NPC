@@ -102,7 +102,7 @@ UE5에서 캡처한 장면 이미지를 Python 서버로 전송합니다.
 
 <!-- 이 아래에 장면 캡처와 객체 인식 결과 이미지를 넣습니다. -->
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/67fbc0c9-b732-4d9e-b428-f9b132264c51" width=" forty" alt="UE5 장면 캡처" />
+  <img src="https://github.com/user-attachments/assets/67fbc0c9-b732-4d9e-b428-f9b132264c51" width=" 40%" alt="UE5 장면 캡처" />
   <img src="https://github.com/user-attachments/assets/bc4b2801-b5e4-444f-a65c-ad57d088fef3" width="55%" alt="VLM 객체 인식 결과" />
 </p>
 
@@ -139,5 +139,7 @@ UE5에서 캡처한 장면 이미지를 Python 서버로 전송합니다.
 
 <!-- 이 아래에 NPC 반응 이미지 또는 영상을 넣습니다. -->
 
-https://github.com/user-attachments/assets/b2faaca9-48dc-4386-b354-4764c058a067
+https://github.com/user-attachments/assets/87c5dcf2-8388-41ee-b0ca-b279346604ad
+
+
 
