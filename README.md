@@ -101,7 +101,10 @@ UE5에서 캡처한 장면 이미지를 Python 서버로 전송합니다.
 시선 계획 생성에 사용할 객체 정보를 구성합니다.
 
 <!-- 이 아래에 장면 캡처와 객체 인식 결과 이미지를 넣습니다. -->
-<img width="1024" height="1024" alt="capture_plan_0" src="https://github.com/user-attachments/assets/67fbc0c9-b732-4d9e-b428-f9b132264c51" /> <img width="792" height="455" alt="image" src="https://github.com/user-attachments/assets/bc4b2801-b5e4-444f-a65c-ad57d088fef3" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/67fbc0c9-b732-4d9e-b428-f9b132264c51" width=" forty" alt="UE5 장면 캡처" />
+  <img src="https://github.com/user-attachments/assets/bc4b2801-b5e4-444f-a65c-ad57d088fef3" width="55%" alt="VLM 객체 인식 결과" />
+</p>
 
 
 
