@@ -239,9 +239,40 @@ Yaw·Pitch 범위 제한과 보간을 적용해 머리 회전에 반영합니다
 세 컴포넌트는 독립적으로 Tick하지 않으며,
 캐릭터가 기존 처리 순서에 맞춰 호출합니다.
 
-### 리팩터링 검증
+### 6. 장면 분석 공유와 계획 통합으로 중복 호출 감소
 
-- Unreal Engine 5.4 Development Editor 빌드·링크 통과
-- 주요 NPC·애니메이션 Blueprint 4개 컴파일 통과
-- 이동한 46개 함수·처리 구간의 원본 로직 대조 통과
-- 실제 플레이에서의 변경 전후 행동 비교는 추가 확인 예정
+성격별로 동일한 장면을 반복 분석하던 구조를 개선했습니다.
+장면은 지점마다 한 번만 분석하고 세 성격의 시선 계획을
+한 번의 모델 호출로 생성하도록 구성했습니다.
+
+또한 같은 지점에서 동일한 타깃을 선택하면
+타깃 위치 추정 결과를 재사용하여 중복 요청을 줄였습니다.
+
+**핵심 코드 — 타깃 위치 추정 결과 공유**
+
+실제 서버 구현에서 발췌한 코드입니다.
+데이터 선택과 측정용 인자 등은 설명을 위해 생략했습니다.
+
+```python
+# 성격 간에도 동일 지점·타깃의 결과를 공유
+cache_key = (
+    persona if is_a else "SHARED",
+    point_index,
+    target_object.casefold(),
+)
+
+if cache_key not in grounding_cache:
+    grounding_cache[cache_key] = ground_target(
+        image_bytes,
+        target_object,
+        metric_metadata,
+    )
+
+grounding = grounding_cache[cache_key]
+plan_item["bbox"] = grounding["bbox"]
+plan_item["bbox_confidence"] = grounding["bbox_confidence"]
+```
+
+캐시는 한 번의 계획 생성 요청 안에서 유지됩니다.
+개선 효과를 비교하기 위해 A/B 구조별 호출 횟수·토큰 사용량·소요 시간을
+CSV로 기록하도록 구현했습니다.
