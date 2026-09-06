@@ -1,7 +1,3 @@
-
-
-https://github.com/user-attachments/assets/87c5dcf2-8388-41ee-b0ca-b279346604ad
-
 # 생성형 AI 기반 NPC 시선 제어 시스템
 
 Unreal Engine 5에서 VLM의 장면 분석과 LLM의 성격별 시선 계획을
@@ -23,7 +19,7 @@ Unreal Engine에서는 이 계획을 실제 월드의 시선 타깃과 회전 �
 ### 실행 모습
 
 ![NPC의 성격별 시선 행동과 실시간 자극 반응]
-
+https://github.com/user-attachments/assets/87c5dcf2-8388-41ee-b0ca-b279346604ad
 동일한 장면에서 성격에 따라 다른 대상을 바라보고,
 위험이나 소리 자극이 발생하면 시선을 전환하는 모습입니다.
 
