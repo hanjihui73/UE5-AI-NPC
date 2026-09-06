@@ -18,7 +18,7 @@ Unreal Engine에서는 이 계획을 실제 월드의 시선 타깃과 회전 �
 
 ### 실행 모습
 
-![NPC의 성격별 시선 행동과 실시간 자극 반응]
+[NPC의 성격별 시선 행동과 실시간 자극 반응]
 
 https://github.com/user-attachments/assets/87c5dcf2-8388-41ee-b0ca-b279346604ad
 
@@ -156,7 +156,9 @@ NPC가 서버의 시선 계획을 수행하면서도 위험·소리·주변 NPC�
 - **주요 구현:** `TArray` 기반 후보 관리, 가우시안 가중합, 성격별 우선순위
 - **관련 함수:** `HandleNPCBehavior()`, `CalculateGaussianScore()`, `CalculateGMMBestPeak()`
 
-[시선 의사결정 코드 보기](Source/jh_HeadRotation/NPCGazeDecisionComponent.cpp)
+[전체 판단 흐름 — HandleNPCBehavior](Source/jh_HeadRotation/NPCGazeDecisionComponent.cpp#L18) ·
+[가우시안 점수 계산 — CalculateGaussianScore](Source/jh_HeadRotation/NPCGazeDecisionComponent.cpp#L41) ·
+[최종 후보 선택 — CalculateGMMBestPeak](Source/jh_HeadRotation/NPCGazeDecisionComponent.cpp#L49)
 
 ### 2. 서버 응답을 기다리지 않는 위험 예측과 반응
 
@@ -170,8 +172,8 @@ NPC가 서버의 시선 계획을 수행하면서도 위험·소리·주변 NPC�
 - **주요 구현:** 벡터 내적, 상대 운동 기반 최근접 거리 예측, 위험 점수 계산
 - **관련 함수:** `CollectSafetyStimuli()`, `AppendSafetyCandidates()`
 
-[위험 평가 코드 보기](Source/jh_HeadRotation/NPCGazeDecisionComponent.cpp) ·
-[위험 대상 정보 수집 코드 보기](Source/jh_HeadRotation/NPCPerceptionComponent.cpp) ·
+[위험 평가 — AppendSafetyCandidates](Source/jh_HeadRotation/NPCGazeDecisionComponent.cpp#L151) ·
+[위험 대상 수집 — CollectSafetyStimuli](Source/jh_HeadRotation/NPCPerceptionComponent.cpp#L168) ·
 [위험 자극 컴포넌트 보기](Source/jh_HeadRotation/SafetyStimulusComponent.cpp)
 
 ### 3. 객체별 태그 설정을 줄여 제작 효율과 확장성 개선
@@ -188,7 +190,9 @@ Actor별 충돌 횟수를 집계해 대상을 선택한 뒤,
 - **개선 효과:** 시선용 태그의 반복 설정을 줄이고 새로운 객체에도 동일한 로직 적용
 - **관련 함수:** `SaveCaptureProjection()`, `TraceNormalizedBBox()`, `ResolvePlanBBoxToWorld()`
 
-[이미지 기반 타깃 변환 코드 보기](Source/jh_HeadRotation/VisionCaptureActor.cpp)
+[촬영 정보 저장 — SaveCaptureProjection](Source/jh_HeadRotation/VisionCaptureActor.cpp#L593) ·
+[좌표 변환·타깃 선택 — TraceNormalizedBBox](Source/jh_HeadRotation/VisionCaptureActor.cpp#L621) ·
+[계획 타깃 변환 — ResolvePlanBBoxToWorld](Source/jh_HeadRotation/VisionCaptureActor.cpp#L778)
 
 ### 4. 주변 NPC의 행동을 반영하는 사회적 시선 반응
 
@@ -201,8 +205,10 @@ Actor별 충돌 횟수를 집계해 대상을 선택한 뒤,
 - **관련 함수:** `CanObserveNPC()`, `EvaluateSocialInfluence()`,
   `ActivateOrExtendSocialGazeLock()`, `ReleaseSocialGazeLock()`
 
-[주변 NPC 관찰 코드 보기](Source/jh_HeadRotation/NPCPerceptionComponent.cpp) ·
-[사회적 시선 판단 코드 보기](Source/jh_HeadRotation/NPCGazeDecisionComponent.Social.cpp)
+[시야·가림 검사 — CanObserveNPC](Source/jh_HeadRotation/NPCPerceptionComponent.cpp#L18) ·
+[사회적 영향 평가 — EvaluateSocialInfluence](Source/jh_HeadRotation/NPCGazeDecisionComponent.Social.cpp#L79) ·
+[시선 유지 — ActivateOrExtendSocialGazeLock](Source/jh_HeadRotation/NPCGazeDecisionComponent.Social.cpp#L391) ·
+[시선 유지 해제 — ReleaseSocialGazeLock](Source/jh_HeadRotation/NPCGazeDecisionComponent.Social.cpp#L437)
 
 ### 5. 시선 판단을 캐릭터 동작으로 연결
 
@@ -213,7 +219,9 @@ Yaw·Pitch 범위 제한과 보간을 적용해 머리 회전에 반영합니다
 - **관련 함수:** `UpdateHeadLookOffsets()`, `UpdateSoundReactionRotation()`,
   `UpdateReactiveMovement()`
 
-[시선·이동 반응 코드 보기](Source/jh_HeadRotation/NPCGazeMotorComponent.cpp)
+[머리 회전 — UpdateHeadLookOffsets](Source/jh_HeadRotation/NPCGazeMotorComponent.cpp#L93) ·
+[소리 반응 회전 — UpdateSoundReactionRotation](Source/jh_HeadRotation/NPCGazeMotorComponent.cpp#L18) ·
+[이동 정지·복귀 — UpdateReactiveMovement](Source/jh_HeadRotation/NPCGazeMotorComponent.cpp#L114)
 
 
 | 역할 | 파일 |
