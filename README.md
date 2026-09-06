@@ -306,10 +306,10 @@ CSV로 기록하도록 구현했습니다.
 | 이동 복귀 | 반응으로 정지한 뒤 기존 경로의 이동을 재개하는지 |
 
 <!-- 위험·소리 반응과 이동 복귀가 보이는 영상 -->
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/ddcc0c06-e02c-4665-854a-10ab92fee8c0" width=" 50%" alt="UE5 장면 캡처" />
-  <img src="https://github.com/user-attachments/assets/4c4ad8e0-f15b-4f56-916b-c49a22810713" width="50%" alt="VLM 객체 인식 결과" />
-</p>
+
+https://github.com/user-attachments/assets/2fca2d1b-0037-40fd-9c03-359cc578ebbd
+
+https://github.com/user-attachments/assets/5192547a-d5e3-41e7-8307-d78ccbcddaa1
 
 ### 3. 시선용 태그가 없는 객체의 타깃 지정
 
@@ -349,10 +349,10 @@ UE5의 시선 디버그 표시를 통해 실제 월드 타깃 연결을 확인�
 - Gemini 호출 소요 시간 합계: 개별 모델 호출에 걸린 시간의 합
 - 서버 전체 경과 시간: 첫 스캔 분석부터 계획·타깃 위치 추정 완료까지의 경과 시간
 - 총 토큰: API 응답의 `total_token_count` 기준
-- 
+
 ### 5. 현재 한계
 
 - 객체 인식과 Bounding Box의 오차가 시선 타깃 지정에 영향을 줄 수 있습니다.
 - 월드 타깃 지정에는 Raycast에 검출되는 충돌 설정이 필요합니다.
-- 로컬 위험·소리 반응은 서버 응답과 분리했지만,
+- 로컬 위험·소리 반응은 서버 응답과 분리했지만
   새로운 장면의 분석과 계획 생성에는 모델 응답 시간이 필요합니다.
