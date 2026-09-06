@@ -287,12 +287,6 @@ CSV로 기록하도록 구현했습니다.
 서버가 생성한 성격별 계획과 실행 중 선택된 시선 타깃을 확인하여
 같은 환경에서도 성격에 따라 시선 행동이 달라지는지 검증했습니다.
 
-<!-- 성격별 시선 차이가 보이는 영상 또는 이미지 -->
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/2f768403-a26d-4c1d-ae2d-98836ca16efd" width=" 50%" alt="UE5 장면 캡처" />
-  <img src="https://github.com/user-attachments/assets/db28ea6e-27f0-4305-969d-fef2f4dad373" width="50%" alt="VLM 객체 인식 결과" />
-</p>
-
 ### 2. 위험·소리 자극에 대한 반응
 
 서버 계획을 수행하는 도중 위험 대상이 접근하거나 소리가 발생하는
